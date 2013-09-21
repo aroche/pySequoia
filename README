@@ -1,0 +1,5 @@
+Application to create big PDF genealogical trees.
+PDF created are multi-pages and printable. The can include pictures.
+
+Dependencies :
+pySequoia relies on pyQt4 and ReportLab

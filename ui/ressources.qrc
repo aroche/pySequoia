@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>sequoia2.ico</file>
+  </qresource>
+</RCC>
