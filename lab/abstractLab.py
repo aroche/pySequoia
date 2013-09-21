@@ -153,10 +153,8 @@ class AbstractLab():
             self.canvas.drawRightString(self.pageSize[0]-8*mm, 5*mm, str(page.numPage))
             
             self.canvas.showPage()
-        try:
-            self.canvas.save()
-        except:
-            pdb.post_mortem()
+
+        self.canvas.save()
 
     def addPage(self):
         self.curPage = len(self.pages)+1
