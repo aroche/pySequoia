@@ -350,6 +350,29 @@ class Ged_individual(Ged_record):
             if parent:
                 for i in parent._recurse_ancestors( index, generation+1, limit):
                     yield i
+                         
+    def _recurse_descendants(self, index, generation, limit = 0):
+        """Generator to recurse over descendants """
+        # NOT TESTED !
+        if self.get_xref() in index:
+            return
+        else:
+            index.append(self.get_xref())
+            
+        if generation > limit and limit > 0:
+            return
+            
+        yield self
+        for union in self.get_unions():
+            for child in union.get_children():
+                for i in child._recurse_descendants( index, generation+1, limit):
+                    yield i             
+                        
+    def get_descendants(self, limit=0):
+        for a in self._recurse_ancestors([], 0, limit):
+            yield a
+                    
+        
 
         
             
