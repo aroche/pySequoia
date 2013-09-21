@@ -16,7 +16,7 @@ from PyQt4 import QtCore, QtGui
 from ui.pySequoia_form_princ import Ui_MainWindow
 from ui.select_indiv_dialog import Ui_select_indiv_dialog
 from ui.options import Ui_Options
-from gedcom2 import *
+from gedcom import *
 import tree
 from gettext import gettext as _
 import pdb
