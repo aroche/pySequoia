@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pySequoia.ui'
 #
-# Created: Sat Sep 21 15:08:09 2013
+# Created: Sat Sep 21 17:05:47 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -162,25 +162,25 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "pySequoia", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MainWindow", "Fichier Gedcom", None, QtGui.QApplication.UnicodeUTF8))
-        self.openButton.setText(QtGui.QApplication.translate("MainWindow", "Rechercher...", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Type d\'arbre", None, QtGui.QApplication.UnicodeUTF8))
-        self.treeType_ascending.setText(QtGui.QApplication.translate("MainWindow", "Ascendant", None, QtGui.QApplication.UnicodeUTF8))
-        self.treeType_descending.setText(QtGui.QApplication.translate("MainWindow", "Descendant", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("MainWindow", "Gedcom file", None, QtGui.QApplication.UnicodeUTF8))
+        self.openButton.setText(QtGui.QApplication.translate("MainWindow", "Browse...", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Tree type", None, QtGui.QApplication.UnicodeUTF8))
+        self.treeType_ascending.setText(QtGui.QApplication.translate("MainWindow", "Ascending", None, QtGui.QApplication.UnicodeUTF8))
+        self.treeType_descending.setText(QtGui.QApplication.translate("MainWindow", "Descending", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("MainWindow", "Orientation", None, QtGui.QApplication.UnicodeUTF8))
         self.orientation_portrait.setText(QtGui.QApplication.translate("MainWindow", "Portrait", None, QtGui.QApplication.UnicodeUTF8))
-        self.orientation_landscape.setText(QtGui.QApplication.translate("MainWindow", "Paysage", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Encodage", None, QtGui.QApplication.UnicodeUTF8))
+        self.orientation_landscape.setText(QtGui.QApplication.translate("MainWindow", "Landscape", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Encoding", None, QtGui.QApplication.UnicodeUTF8))
         self.encoding.setItemText(0, QtGui.QApplication.translate("MainWindow", "UTF-8", None, QtGui.QApplication.UnicodeUTF8))
         self.encoding.setItemText(1, QtGui.QApplication.translate("MainWindow", "Latin1", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_reload_file.setText(QtGui.QApplication.translate("MainWindow", "Recharger le fichier", None, QtGui.QApplication.UnicodeUTF8))
-        self.include_images.setText(QtGui.QApplication.translate("MainWindow", "Inclure les images", None, QtGui.QApplication.UnicodeUTF8))
-        self.create_index.setText(QtGui.QApplication.translate("MainWindow", "Créer un index", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Nombre de générations", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Enregistrer le PDF sous", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveButton.setText(QtGui.QApplication.translate("MainWindow", "Rechercher...", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Personne à la base", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setText(QtGui.QApplication.translate("MainWindow", "Sélectionner...", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_reload_file.setText(QtGui.QApplication.translate("MainWindow", "Reload file", None, QtGui.QApplication.UnicodeUTF8))
+        self.include_images.setText(QtGui.QApplication.translate("MainWindow", "Include  images", None, QtGui.QApplication.UnicodeUTF8))
+        self.create_index.setText(QtGui.QApplication.translate("MainWindow", "Create  index", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Number of generations", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Save PDF as", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveButton.setText(QtGui.QApplication.translate("MainWindow", "Browse...", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Base individual", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_3.setText(QtGui.QApplication.translate("MainWindow", "Select", None, QtGui.QApplication.UnicodeUTF8))
         self.menuOptions.setTitle(QtGui.QApplication.translate("MainWindow", "Options", None, QtGui.QApplication.UnicodeUTF8))
         self.actionPreferences.setText(QtGui.QApplication.translate("MainWindow", "Préférences...", None, QtGui.QApplication.UnicodeUTF8))
         self.action_about_pySequoia.setText(QtGui.QApplication.translate("MainWindow", "A propos de pySequoia...", None, QtGui.QApplication.UnicodeUTF8))

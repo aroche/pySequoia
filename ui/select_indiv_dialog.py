@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'select_indiv_dialog.ui'
 #
-# Created: Sat Sep 21 15:09:08 2013
+# Created: Sat Sep 21 17:05:53 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,6 +46,6 @@ class Ui_select_indiv_dialog(object):
         QtCore.QMetaObject.connectSlotsByName(select_indiv_dialog)
 
     def retranslateUi(self, select_indiv_dialog):
-        select_indiv_dialog.setWindowTitle(QtGui.QApplication.translate("select_indiv_dialog", "Sélection de l\'indvidu de base", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("select_indiv_dialog", "Filtre :", None, QtGui.QApplication.UnicodeUTF8))
+        select_indiv_dialog.setWindowTitle(QtGui.QApplication.translate("select_indiv_dialog", "Select base individual", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("select_indiv_dialog", "Filter:", None, QtGui.QApplication.UnicodeUTF8))
 

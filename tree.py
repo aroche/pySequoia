@@ -8,7 +8,6 @@ from reportlab.lib.units import mm
 from reportlab.lib.pagesizes import A4
 from lab.abstractLab import *
 from PyQt4.QtCore import QSettings
-from gettext import gettext as _
 
 
 class Tree:
@@ -155,14 +154,14 @@ class Tree:
 		"""Initialise PDF"""
 		self.pdf = AbstractLab(str(self.options.value("saveFile").toString()), self._get_pageSize())
 		self.pdf.addPage()
-		self.pdf.title = _(unicode(self.options.value("treeType").toString())) + ' ' + _('from') + ' ' \
+		self.pdf.title = tr(unicode(self.options.value("treeType").toString())) + ' ' + tr('from') + ' ' \
 			+ self.base_indiv.get_cased_name()
 		self.ytxpos = self._get_pageHeight()-20*mm
 
 
 	def endDoc(self):
 		self.pdf.save()
-		print _("File saved")
+		print tr("File saved")
 
 	def new_page(self):
 		self.pdf.addPage()
@@ -243,7 +242,7 @@ class Tree:
 			txt.fontName = str(self.options.value("fontName").toString())
 			maxX = txt.getXmax()
 			rect = (maxX, txt.getY(), maxX + 20*mm, txt.getY() + fontSize) # largeur à ajuster
-			lnk = LinkElement(_('go'), link['page'], link['ypos'] + fontSize, rect)
+			lnk = LinkElement(tr('go'), link['page'], link['ypos'] + fontSize, rect)
 			lnk.name = 'i'+str(indiv.get_xref())
 			self.pdf.addElement(lnk)
 			txt.setColor((0,0,.8))
@@ -352,7 +351,7 @@ class Tree:
 			txt.addWord(' p. ' + str(page))
 			self.pdf.addElement(txt)
 			rect = (x, ytxpos, column * colWidth - 7*mm, ytxpos + fontSize)
-			self.pdf.addElement(LinkElement(_('go'), page, self.index_indiv[xref]['ypos'] + fontSize, rect))
+			self.pdf.addElement(LinkElement(tr('go'), page, self.index_indiv[xref]['ypos'] + fontSize, rect))
 			ytxpos -= fontSize
 			if ytxpos < 20*mm: # chgt de column
 				column += 1

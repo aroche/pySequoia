@@ -24,7 +24,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Fichier Gedcom</string>
+         <string>Gedcom file</string>
         </property>
        </widget>
       </item>
@@ -34,7 +34,7 @@
       <item>
        <widget class="QPushButton" name="openButton">
         <property name="text">
-         <string>Rechercher...</string>
+         <string>Browse...</string>
         </property>
        </widget>
       </item>
@@ -45,7 +45,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
-         <string>Type d'arbre</string>
+         <string>Tree type</string>
         </property>
         <widget class="QRadioButton" name="treeType_ascending">
          <property name="geometry">
@@ -57,7 +57,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Ascendant</string>
+          <string>Ascending</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -73,7 +73,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Descendant</string>
+          <string>Descending</string>
          </property>
         </widget>
        </widget>
@@ -97,7 +97,7 @@
          <item>
           <widget class="QRadioButton" name="orientation_landscape">
            <property name="text">
-            <string>Paysage</string>
+            <string>Landscape</string>
            </property>
           </widget>
          </item>
@@ -109,7 +109,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Encodage</string>
+           <string>Encoding</string>
           </property>
          </widget>
         </item>
@@ -133,7 +133,7 @@
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Recharger le fichier</string>
+           <string>Reload file</string>
           </property>
          </widget>
         </item>
@@ -148,7 +148,7 @@
         <item>
          <widget class="QCheckBox" name="include_images">
           <property name="text">
-           <string>Inclure les images</string>
+           <string>Include  images</string>
           </property>
          </widget>
         </item>
@@ -158,7 +158,7 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>Créer un index</string>
+           <string>Create  index</string>
           </property>
          </widget>
         </item>
@@ -182,7 +182,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Nombre de générations</string>
+           <string>Number of generations</string>
           </property>
          </widget>
         </item>
@@ -221,7 +221,7 @@
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Enregistrer le PDF sous</string>
+         <string>Save PDF as</string>
         </property>
        </widget>
       </item>
@@ -231,7 +231,7 @@
       <item>
        <widget class="QPushButton" name="saveButton">
         <property name="text">
-         <string>Rechercher...</string>
+         <string>Browse...</string>
         </property>
        </widget>
       </item>
@@ -240,7 +240,7 @@
     <item>
      <widget class="QGroupBox" name="groupBox_3">
       <property name="title">
-       <string>Personne à la base</string>
+       <string>Base individual</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
@@ -269,7 +269,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Sélectionner...</string>
+          <string>Select</string>
          </property>
         </widget>
        </item>

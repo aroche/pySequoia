@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Sélection de l'indvidu de base</string>
+   <string>Select base individual</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -22,7 +22,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Filtre :</string>
+        <string>Filter:</string>
        </property>
        <property name="buddy">
         <cstring>filter</cstring>
