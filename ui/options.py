@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'options.ui'
 #
-# Created: Sat Sep 21 12:08:18 2013
+# Created: Sat Sep 21 15:08:54 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -97,7 +97,7 @@ class Ui_Options(object):
         self.label_2 = QtGui.QLabel(self.layoutWidget)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout_2.addWidget(self.label_2)
-        self.boutonCoulFemmes = QtGui.QPushButton(self.layoutWidget)
+        self.womenColorButton = QtGui.QPushButton(self.layoutWidget)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -234,17 +234,17 @@ class Ui_Options(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        self.boutonCoulFemmes.setPalette(palette)
-        self.boutonCoulFemmes.setAutoFillBackground(False)
-        self.boutonCoulFemmes.setFlat(False)
-        self.boutonCoulFemmes.setObjectName(_fromUtf8("boutonCoulFemmes"))
-        self.horizontalLayout_2.addWidget(self.boutonCoulFemmes)
+        self.womenColorButton.setPalette(palette)
+        self.womenColorButton.setAutoFillBackground(False)
+        self.womenColorButton.setFlat(False)
+        self.womenColorButton.setObjectName(_fromUtf8("womenColorButton"))
+        self.horizontalLayout_2.addWidget(self.womenColorButton)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.label_3 = QtGui.QLabel(self.layoutWidget)
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.horizontalLayout_2.addWidget(self.label_3)
-        self.boutonCoulHommes = QtGui.QPushButton(self.layoutWidget)
+        self.menColorButton = QtGui.QPushButton(self.layoutWidget)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -381,11 +381,11 @@ class Ui_Options(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        self.boutonCoulHommes.setPalette(palette)
-        self.boutonCoulHommes.setAutoFillBackground(False)
-        self.boutonCoulHommes.setFlat(False)
-        self.boutonCoulHommes.setObjectName(_fromUtf8("boutonCoulHommes"))
-        self.horizontalLayout_2.addWidget(self.boutonCoulHommes)
+        self.menColorButton.setPalette(palette)
+        self.menColorButton.setAutoFillBackground(False)
+        self.menColorButton.setFlat(False)
+        self.menColorButton.setObjectName(_fromUtf8("menColorButton"))
+        self.horizontalLayout_2.addWidget(self.menColorButton)
         self.verticalLayout.addWidget(self.groupBox_2)
         self.buttonBox = QtGui.QDialogButtonBox(Options)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -420,7 +420,7 @@ class Ui_Options(object):
         self.fontSize.setItemText(9, QtGui.QApplication.translate("Options", "20", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Options", "Couleurs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("Options", "Femmes", None, QtGui.QApplication.UnicodeUTF8))
-        self.boutonCoulFemmes.setText(QtGui.QApplication.translate("Options", "Sélectionner...", None, QtGui.QApplication.UnicodeUTF8))
+        self.womenColorButton.setText(QtGui.QApplication.translate("Options", "Sélectionner...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Options", "Hommes", None, QtGui.QApplication.UnicodeUTF8))
-        self.boutonCoulHommes.setText(QtGui.QApplication.translate("Options", "Sélectionner...", None, QtGui.QApplication.UnicodeUTF8))
+        self.menColorButton.setText(QtGui.QApplication.translate("Options", "Sélectionner...", None, QtGui.QApplication.UnicodeUTF8))
 

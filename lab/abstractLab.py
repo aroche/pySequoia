@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# Classe intermédiaire avec reportlab pour pouvoir faire du multipage
+# inermediary class to make ReportLab multi-pages
+# and easyer object manipulation
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
@@ -67,16 +68,18 @@ class LineElement:
 			canvas.setDash([], 0)
 		canvas.line(self.coords[0], self.coords[1], self.coords[2], self.coords[3])
 
+		
 class LinkElement:
-	def __init__(self, page, pos, rect):
+	def __init__(self, text, page, pos, rect):
 		self.name = os.urandom(10)
 		self.destPos = pos
 		self.destPage = page
 		self.coords = rect
 
 	def render(self, canvas):
-		canvas.linkAbsolute('Voir', self.name, self.coords)
+		canvas.linkAbsolute(text, self.name, self.coords)
 
+		
 class ImageElement:
 	def __init__(self, link, pos, height):
 		self.link = link
@@ -118,7 +121,7 @@ class AbstractLab():
 		self.images = {}
 
 	def save(self):
-		# Parcours des destinations
+		# browse destinations
 		dests = {}
 		for page in self.pages:
 			dests[page.numPage] = {}
@@ -127,13 +130,13 @@ class AbstractLab():
 				if elt.__class__.__name__ == 'LinkElement':
 					dests[elt.destPage][elt.name] = elt.destPos
 		
-		# Ecriture du titre
+		# writing title
 		if self.title:
 			self.canvas.setFont(self.font, 20)
 			self.canvas.drawCentredString(self.pageSize[0]/2, self.pageSize[1]-15*mm, self.title)
 			self.canvas.setTitle(self.title)
 
-		# Traçage des éléments
+		# keep trace of elements
 		for page in self.pages:
 			self.canvas.setFont(self.font, self.fontSize)
 			for elt in page.elements:
@@ -157,12 +160,9 @@ class AbstractLab():
 		return self.pages[nb-1]
 
 	def addElement(self, elt):
-		try:
-			self.pages[self.curPage-1].addElement(elt)
-		except:
-			pdb.set_trace()
+		self.pages[self.curPage-1].addElement(elt)
+
 
 	def setCurrentPage(self, nb):
-		#pdb.set_trace()
 		if nb <= len(self.pages):
 			self.curPage = nb

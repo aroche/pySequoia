@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'select_indiv_dialog.ui'
 #
-# Created: Sat Sep 21 12:15:06 2013
+# Created: Sat Sep 21 15:09:08 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,19 +26,19 @@ class Ui_select_indiv_dialog(object):
         self.label = QtGui.QLabel(select_indiv_dialog)
         self.label.setObjectName(_fromUtf8("label"))
         self.horizontalLayout.addWidget(self.label)
-        self.filtre = QtGui.QLineEdit(select_indiv_dialog)
-        self.filtre.setObjectName(_fromUtf8("filtre"))
-        self.horizontalLayout.addWidget(self.filtre)
+        self.filter = QtGui.QLineEdit(select_indiv_dialog)
+        self.filter.setObjectName(_fromUtf8("filter"))
+        self.horizontalLayout.addWidget(self.filter)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.liste_indiv = QtGui.QListWidget(select_indiv_dialog)
-        self.liste_indiv.setObjectName(_fromUtf8("liste_indiv"))
-        self.verticalLayout.addWidget(self.liste_indiv)
+        self.indiv_list = QtGui.QListWidget(select_indiv_dialog)
+        self.indiv_list.setObjectName(_fromUtf8("indiv_list"))
+        self.verticalLayout.addWidget(self.indiv_list)
         self.buttonBox = QtGui.QDialogButtonBox(select_indiv_dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
-        self.label.setBuddy(self.filtre)
+        self.label.setBuddy(self.filter)
 
         self.retranslateUi(select_indiv_dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), select_indiv_dialog.accept)
