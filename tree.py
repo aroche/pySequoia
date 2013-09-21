@@ -7,7 +7,10 @@ import os.path
 from reportlab.lib.units import mm
 from reportlab.lib.pagesizes import A4
 from lab.abstractLab import *
-from PyQt4.QtCore import QSettings
+from PyQt4.QtCore import QSettings, QObject, QString
+
+qo = QObject()
+tr = qo.tr
 
 
 class Tree:
@@ -16,7 +19,7 @@ class Tree:
 		self.options = QSettings("A3X", "pySequoia")
 		self.max_generations = self.options.value("max_generations").toInt()[0]
 		self.notes = []
-		self.counterr = 0
+		self.counter = 0
 
 	def setProgressDialog(self, dialog):
 		"""Gives a ProgressDialog for displaying progression"""
@@ -38,7 +41,7 @@ class Tree:
 		except KeyError:
 			pos = None
 		if pos: # l'indiv existe dejà
-			self.ecrire_indiv(indiv, generation, str(generation)+'.', pos)
+			self.write_indiv(indiv, generation, str(generation)+'.', pos)
 			self.lastpos = {'page':self.pdf.curPage, 'ypos':self.ytxpos}
 			return False
 		else:
@@ -48,16 +51,16 @@ class Tree:
 			if indiv2:
 				rep = self.parents(indiv2, generation)
 			# mettre la clause d'annulation
-			self.ecrire_indiv(indiv, generation-1, str(generation-1)+'.')
-			self.compteur = self.compteur + 1
+			self.write_indiv(indiv, generation-1, str(generation-1)+'.')
+			self.counter = self.counter + 1
 			pos = {'page':self.pdf.curPage, 'ypos':self.ytxpos}
 			self.index_indiv[refi] = pos
 
 			if rep:
 				if indiv2 and generation-1 != self.max_generations:
-					self.ligne_vert(generation-1, True, self.index_indiv[indiv2.get_xref()], pos)
+					self.vertical_line(generation-1, True, self.index_indiv[indiv2.get_xref()], pos)
 			elif self.lastpos:
-				self.ligne_vert(generation-1, True, self.lastpos, pos)
+				self.vertical_line(generation-1, True, self.lastpos, pos)
 				self.lastpos = None
 
 			indiv2 = indiv.get_mother()
@@ -65,9 +68,9 @@ class Tree:
 				rep = self.parents(indiv2, generation)
 				if rep:
 					if generation-1 != self.max_generations:
-						self.ligne_vert(generation-1, True, self.index_indiv[indiv2.get_xref()], pos)
+						self.vertical_line(generation-1, True, self.index_indiv[indiv2.get_xref()], pos)
 				else:
-					self.ligne_vert(generation-1, True, self.lastpos, pos)
+					self.vertical_line(generation-1, True, self.lastpos, pos)
 					self.lastpos = None
 			return True
 
@@ -154,8 +157,8 @@ class Tree:
 		"""Initialise PDF"""
 		self.pdf = AbstractLab(str(self.options.value("saveFile").toString()), self._get_pageSize())
 		self.pdf.addPage()
-		self.pdf.title = tr(unicode(self.options.value("treeType").toString())) + ' ' + tr('from') + ' ' \
-			+ self.base_indiv.get_cased_name()
+		self.pdf.title = str(tr(self.options.value("treeType").toString()) + ' ' + tr(QString('from')) + ' ' \
+			+ self.base_indiv.get_cased_name())
 		self.ytxpos = self._get_pageHeight()-20*mm
 
 
@@ -198,14 +201,14 @@ class Tree:
 				txt.setColor(self.options.value("womenColor").toPyObject())
 			else:
 				txt.setColor(self.options.value("menColor").toPyObject())
-			ligne = prefixe+' '+indiv.get_cased_name()+' '
+			line = prefix + ' ' + indiv.get_cased_name()+' '
 		txt.addWord(line)
 
 		if not indiv:
 			self.pdf.addElement(txt)
 			return
 
-		if lien == None:
+		if link == None:
 			# infos complémentaires
 			txt.setColor((0,0,0))
 			if 'dates' in self.options.value("printElements").toPyObject():
@@ -242,11 +245,11 @@ class Tree:
 			txt.fontName = str(self.options.value("fontName").toString())
 			maxX = txt.getXmax()
 			rect = (maxX, txt.getY(), maxX + 20*mm, txt.getY() + fontSize) # largeur à ajuster
-			lnk = LinkElement(tr('go'), link['page'], link['ypos'] + fontSize, rect)
-			lnk.name = 'i'+str(indiv.get_xref())
+			lnk = LinkElement(str(tr('go')), link['page'], link['ypos'] + fontSize, rect)
+			lnk.name = 'i' + str(indiv.get_xref())
 			self.pdf.addElement(lnk)
 			txt.setColor((0,0,.8))
-			txt.addWord(strlink)
+			txt.addWord(strLink)
 		self.pdf.addElement(txt)
 		
 	
@@ -333,14 +336,14 @@ class Tree:
 		fontSize = self.options.value("fontSize").toInt()[0]
 		keyList = self.index_indiv.keys()
 		keyList.sort(key = lambda x: self.gedcom.getIndividualAtXref(x).get_name_for_classment())
-		self.nouvelle_page()
+		self.new_page()
 		topP = self._get_pageHeight()
 		#TODO : Titre et lien vers l'index en debut de document
 
 		colWidth = (self._get_pageSize()[0]-14*mm) / NBCOL
 		ytxpos = topP - 25*mm
 		column = 1
-		for xref in liste:
+		for xref in keyList:
 			indiv = self.gedcom.getIndividualAtXref(xref)
 			x = (column - 1) * colWidth + 7*mm
 			txt = TextElement(x, ytxpos)
@@ -351,7 +354,7 @@ class Tree:
 			txt.addWord(' p. ' + str(page))
 			self.pdf.addElement(txt)
 			rect = (x, ytxpos, column * colWidth - 7*mm, ytxpos + fontSize)
-			self.pdf.addElement(LinkElement(tr('go'), page, self.index_indiv[xref]['ypos'] + fontSize, rect))
+			self.pdf.addElement(LinkElement(str(tr('go')), page, self.index_indiv[xref]['ypos'] + fontSize, rect))
 			ytxpos -= fontSize
 			if ytxpos < 20*mm: # chgt de column
 				column += 1

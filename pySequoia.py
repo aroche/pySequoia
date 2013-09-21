@@ -38,7 +38,7 @@ class Application(QtGui.QMainWindow):
         QtCore.QObject.connect(self.ui.openButton,QtCore.SIGNAL("clicked()"), self.file_open_dialog)
         QtCore.QObject.connect(self.ui.saveButton,QtCore.SIGNAL("clicked()"), self.file_save_dialog)
         QtCore.QObject.connect(self.ui.button_reload_file,QtCore.SIGNAL("clicked()"), self.read_gedcom)
-        QtCore.QObject.connect(self.ui.buttonBox,QtCore.SIGNAL("accepted()"), self.traite_fichier)
+        QtCore.QObject.connect(self.ui.buttonBox,QtCore.SIGNAL("accepted()"), self.run)
         QtCore.QObject.connect(self.ui.pushButton_3,QtCore.SIGNAL("clicked()"), self.select_base_indiv)
         QtCore.QObject.connect(self.ui.actionPreferences,QtCore.SIGNAL("triggered()"), self.options_dialog)
         QtCore.QObject.connect(self.ui.encoding,QtCore.SIGNAL("currentIndexChanged()"), self.change_encoding)
@@ -77,7 +77,7 @@ class Application(QtGui.QMainWindow):
             self.ui.lineEdit_2.setText(path)
 
     def read_gedcom(self):
-        """Recharge le fichier Gedcom"""
+        """Reloads Gedcom file"""
         path = str(self.ui.lineEdit.text())
         if os.path.isfile(path):
             self.ui.statusbar.showMessage(_("Reading Gedcom file"))
@@ -180,12 +180,12 @@ class Application(QtGui.QMainWindow):
             elts.append('notes')
         options.setValue("printElements", elts)
 
-    def traite_fichier(self):
-        """Fonction principale lançant le traitement"""
+    def run(self):
+        """Main function processing file"""
         QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
         options = QtCore.QSettings("A3X", "pySequoia")
         self.setOptions()
-        if not os.path.isdir(os.path.dirname(options.value("saveFile").toString())):
+        if not os.path.isdir(os.path.dirname(str(options.value("saveFile").toString()))):
             QtGui.QMessageBox.warning(self, _("Error"), _("Enter a PDF file name"))
             QtGui.QApplication.restoreOverrideCursor()
             return
