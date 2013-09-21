@@ -287,7 +287,7 @@ class Ged_individual(Ged_record):
             return None
 
     def get_union(self, index):
-        """Trouve la famille à l'index demandé (commence à 1)"""
+        """finds family at given index (starts at 1)"""
         val = self.getTagValue('FAMS', index)
         if val:
             xr = self._valXref(val)
@@ -296,7 +296,7 @@ class Ged_individual(Ged_record):
             return None
             
     def get_unions(self):
-        """Renvoie toutes les unions (generator)"""        
+        """Returns all unions (generator)"""        
         for f in self.getTagList('FAMS'):
             val = f.getValue()
             xr = self._valXref(val)
@@ -369,7 +369,7 @@ class Ged_individual(Ged_record):
                     yield i             
                         
     def get_descendants(self, limit=0):
-        for a in self._recurse_ancestors([], 0, limit):
+        for a in self._recurse_descendants([], 0, limit):
             yield a
                     
         
