@@ -16,10 +16,10 @@ from PyQt4 import QtCore, QtGui
 from ui.pySequoia_form_princ import Ui_MainWindow
 from ui.select_indiv_dialog import Ui_select_indiv_dialog
 from ui.options import Ui_Options
-from gedcom import *
+from gedcom2 import *
 import tree
 from gettext import gettext as _
-#import pdb
+import pdb
 
 
 class Application(QtGui.QMainWindow):
@@ -83,14 +83,16 @@ class Application(QtGui.QMainWindow):
             self.ui.statusbar.showMessage(_("Reading Gedcom file"))
             try:
                 QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
-                self.gedcom.encoding = str(self.ui.encodage.currentText())
+                self.gedcom.encoding = str(self.ui.encoding.currentText())
                 self.gedcom.loadFromFile(path)
             except UnicodeDecodeError:
                 QtGui.QMessageBox.warning(self, _("Read error"), _("Check the file encoding"))
             except:
                 #pdb.post_mortem()
-                QtGui.QMessageBox.warning(self, _("Error"), _("File is not a valid Gedcom"))
+                e = sys.exc_info()[1]
+                QtGui.QMessageBox.warning(self, _("Error"), _("File is not a valid Gedcom:\n" + str(e)))
             else:
+                #pdb.set_trace()
                 xr = self.gedcom.indexXrefsI.keys()[0]
                 ind = self.gedcom.getIndividualAtXref(xr)
                 self.ui.label_4.setText(ind.get_cased_name())
@@ -150,18 +152,18 @@ class Application(QtGui.QMainWindow):
         options = QtCore.QSettings("A3X", "pySequoia")
         options.setValue('saveFile', self.ui.lineEdit_2.text())
         options.setValue("gedcomFile", self.ui.lineEdit.text())
-        options.setValue("printImages", self.ui.inclure_images.isChecked())
-        options.setValue("createIndex", self.ui.creer_index.isChecked())
-        options.setValue("max_generations", self.ui.nb_generations.value())
-        options.setValue("gedcomEncoding", self.ui.encodage.currentText())
+        options.setValue("printImages", self.ui.include_images.isChecked())
+        options.setValue("createIndex", self.ui.create_index.isChecked())
+        options.setValue("max_generations", self.ui.generation_nb.value())
+        options.setValue("gedcomEncoding", self.ui.encoding.currentText())
         if self.ui.orientation_portrait.isChecked():
             options.setValue("pageOrientation", 'portrait')
         else:
             options.setValue("pageOrientation", 'landscape')
-        if self.ui.typeArbre_ascendant.isChecked():
-            options.setValue("treeType", 'ascendant')
+        if self.ui.treeType_ascending.isChecked():
+            options.setValue("treeType", 'ascending')
         else:
-            options.setValue("treeType", 'descendant')
+            options.setValue("treeType", 'descending')
         options.setValue("menColor", self.optionDialog.getColor('M'))
         options.setValue("womenColor", self.optionDialog.getColor('F'))
         options.setValue("fontSize", self.optionDialog.getFontSize())

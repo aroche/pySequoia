@@ -27,7 +27,7 @@ class Tree:
 			self.progressDialog.setValue(progress)
 
 	def parents(self, indiv, generation):
-		"""Fonction récursive de construction de l'arbre des ancetres"""
+		"""recursively builds ascending tree"""
 		if generation > self.max_generations:
 			self.lastpos = {}
 			return False
@@ -167,7 +167,7 @@ class Tree:
 		self.pdf.addPage()
 
 	def write_indiv(self, indiv, generation, prefix, link=None):
-		"""Ecriture sur le pdf d'un nom d'individu"""
+		"""Writes an individual's name in PDF"""
 		SHIFT = generation*4
 		height = self._get_pageHeight()
 		width = self._get_pageSize()[0]
@@ -251,7 +251,7 @@ class Tree:
 		
 	
 	def vertical_line(self, generation, fl_hor, pos1, pos2, dashed=False):
-		"""Trace une ligne verticale entre positions"""
+		"""Draws a vertical line between positions"""
 		SHIFT = 4*mm
 		
 		if not pos1 or not pos2:
