@@ -101,10 +101,6 @@
        <string>Notes</string>
       </property>
      </widget>
-     <zorder>infos_dates</zorder>
-     <zorder>infos_occupation</zorder>
-     <zorder>infos_notes</zorder>
-     <zorder>groupBox</zorder>
     </widget>
    </item>
    <item>
@@ -240,7 +236,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="boutonCoulFemmes">
+        <widget class="QPushButton" name="womenColorButton">
          <property name="palette">
           <palette>
            <active>
@@ -688,7 +684,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="boutonCoulHommes">
+        <widget class="QPushButton" name="menColorButton">
          <property name="palette">
           <palette>
            <active>

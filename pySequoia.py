@@ -6,42 +6,42 @@ pySequoia
 
 Version python de Sequoia
 
-Auteur : Augustin Roche
+Author : Augustin Roche
 
-Printemps 2012
+Spring 2012
 """
 
 import sys, os
 from PyQt4 import QtCore, QtGui
-from pySequoia_form_princ import Ui_MainWindow
-from select_indiv_dialog import Ui_select_indiv_dialog
-from options import Ui_Options
+from ui.pySequoia_form_princ import Ui_MainWindow
+from ui.select_indiv_dialog import Ui_select_indiv_dialog
+from ui.options import Ui_Options
 from gedcom import *
-import arbre
+import tree
+from gettext import gettext as _
 #import pdb
 
 
 class Application(QtGui.QMainWindow):
 
-    
     def __init__(self):
         QtGui.QWidget.__init__(self)
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.xref_base_indiv = '3179'
+        #self.xref_base_indiv = '3179'
 
-        self.optionDialog = Fenetre_Options()
+        self.optionDialog = Option_dialog()
 
         # Connections
         QtCore.QObject.connect(self.ui.openButton,QtCore.SIGNAL("clicked()"), self.file_open_dialog)
         QtCore.QObject.connect(self.ui.saveButton,QtCore.SIGNAL("clicked()"), self.file_save_dialog)
         QtCore.QObject.connect(self.ui.button_reload_file,QtCore.SIGNAL("clicked()"), self.read_gedcom)
         QtCore.QObject.connect(self.ui.buttonBox,QtCore.SIGNAL("accepted()"), self.traite_fichier)
-        QtCore.QObject.connect(self.ui.pushButton_3,QtCore.SIGNAL("clicked()"), self.select_indiv_base)
+        QtCore.QObject.connect(self.ui.pushButton_3,QtCore.SIGNAL("clicked()"), self.select_base_indiv)
         QtCore.QObject.connect(self.ui.actionPreferences,QtCore.SIGNAL("triggered()"), self.options_dialog)
-        QtCore.QObject.connect(self.ui.encodage,QtCore.SIGNAL("currentIndexChanged()"), self.change_encodage)
+        QtCore.QObject.connect(self.ui.encoding,QtCore.SIGNAL("currentIndexChanged()"), self.change_encoding)
 
         QtCore.pyqtRemoveInputHook()
 
@@ -80,16 +80,16 @@ class Application(QtGui.QMainWindow):
         """Recharge le fichier Gedcom"""
         path = str(self.ui.lineEdit.text())
         if os.path.isfile(path):
-            self.ui.statusbar.showMessage(u"Lecture du fichier Gedcom.")
+            self.ui.statusbar.showMessage(_("Reading Gedcom file"))
             try:
                 QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
                 self.gedcom.encoding = str(self.ui.encodage.currentText())
                 self.gedcom.loadFromFile(path)
             except UnicodeDecodeError:
-                QtGui.QMessageBox.warning(self, "Erreur de lecture", u"Vérifiez que l'encodage choisi est le bon.")
+                QtGui.QMessageBox.warning(self, _("Read error"), _("Check the file encoding"))
             except:
                 #pdb.post_mortem()
-                QtGui.QMessageBox.warning(self, "Erreur", u"Le fichier n'est pas valide.")
+                QtGui.QMessageBox.warning(self, _("Error"), _("File is not a valid Gedcom"))
             else:
                 xr = self.gedcom.indexXrefsI.keys()[0]
                 ind = self.gedcom.getIndividualAtXref(xr)
@@ -105,11 +105,11 @@ class Application(QtGui.QMainWindow):
     def options_dialog(self):
         self.optionDialog.exec_()
 
-    def change_encodage(self):
+    def change_encoding(self):
         if self.ui.lineEdit.text():
             self.ui.button_reload_file.setEnabled(True)
 
-    def select_indiv_base(self):
+    def select_base_indiv(self):
         dialg = Select_indiv(self.gedcom)
         dialg.exec_()
         xr = dialg.getXref()
@@ -122,17 +122,17 @@ class Application(QtGui.QMainWindow):
         # Positionnement des controles selon les options enregistrees
         options = QtCore.QSettings("A3X", "pySequoia")
         # fenetre principale
-        self.ui.encodage.setCurrentIndex(
-            self.ui.encodage.findText(options.value("gedcomEncoding", "utf-8").toString()))
-        val = options.value("treeType", 'ascendant').toString()
-        self.ui.typeArbre_ascendant.setChecked(val == "ascendant")
-        self.ui.typeArbre_descendant.setChecked(val == "descendant")
+        self.ui.encoding.setCurrentIndex(
+            self.ui.encoding.findText(options.value("gedcomEncoding", "utf-8").toString()))
+        val = options.value("treeType", 'ascending').toString()
+        self.ui.treeType_ascending.setChecked(val == "ascending")
+        self.ui.treeType_descending.setChecked(val == "descending")
         val = options.value("pageOrientation", "portrait").toString()
         self.ui.orientation_portrait.setChecked(val == "portrait")
-        self.ui.orientation_paysage.setChecked(val == "landscape")
-        self.ui.inclure_images.setChecked(options.value("printImages", True).toBool())
-        self.ui.nb_generations.setValue(options.value("max_generations", 10).toInt()[0])
-        self.ui.creer_index.setChecked(options.value("createIndex", True).toBool())
+        self.ui.orientation_landscape.setChecked(val == "landscape")
+        self.ui.include_images.setChecked(options.value("printImages", True).toBool())
+        self.ui.generation_nb.setValue(options.value("max_generations", 10).toInt()[0])
+        self.ui.create_index.setChecked(options.value("createIndex", True).toBool())
         # options avancees
         self.optionDialog.setColor('F', options.value("womenColor", (1,0,0)).toPyObject())
         self.optionDialog.setColor('M', options.value("menColor", (0,0,1)).toPyObject())
@@ -184,26 +184,25 @@ class Application(QtGui.QMainWindow):
         options = QtCore.QSettings("A3X", "pySequoia")
         self.setOptions()
         if not os.path.isdir(os.path.dirname(options.value("saveFile").toString())):
-            QtGui.QMessageBox.warning(self, "Erreur", u"Indiquez un fichier PDF")
+            QtGui.QMessageBox.warning(self, _("Error"), _("Enter a PDF file name"))
             QtGui.QApplication.restoreOverrideCursor()
             return
-        monArbre = arbre.Arbre(self.gedcom)
-        monArbre.indiv_base = self.gedcom.getIndividualAtXref(self.xref_base_indiv)
-        monArbre.initDoc()
-        if options.value("treeType") == 'ascendant':
-            monArbre.arbre_ascendant()
+        myTree = tree.Tree(self.gedcom)
+        myTree.base_indiv = self.gedcom.getIndividualAtXref(self.xref_base_indiv)
+        myTree.initDoc()
+        if options.value("treeType") == 'ascending':
+            myTree.ascending_tree()
         else:
-            monArbre.arbre_descendant()
+            myTree.descending_tree()
         if options.value("createIndex").toBool():
-            monArbre.index_alpha()
-        monArbre.endDoc()
+            myTree.index_alpha()
+        myTree.endDoc()
         QtGui.QApplication.restoreOverrideCursor()
-        QtGui.QMessageBox.information(self, u"Terminé", u"Le fichier PDF a été créé.")
-        #os.system(options.saveFile)
+        QtGui.QMessageBox.information(self, _("Done"), _("PDF file was successfully created"))
 
 
 class Select_indiv(QtGui.QDialog):
-    """Dialogue de choix de l'individu de base"""
+    """Dialog for selecting base person"""
     nbLimit = 100
     
     def __init__(self, gedcom):
@@ -211,61 +210,61 @@ class Select_indiv(QtGui.QDialog):
         self.ui = Ui_select_indiv_dialog()
         self.ui.setupUi(self)
         self.gedcom = gedcom
-        QtCore.QObject.connect(self.ui.filtre,QtCore.SIGNAL("textChanged(QString)"), self.peupler_liste)
-        self.peupler_liste()
-        self.ui.filtre.setFocus()
+        QtCore.QObject.connect(self.ui.filter, QtCore.SIGNAL("textChanged(QString)"), self.fillList)
+        self.fillList()
+        self.ui.filter.setFocus()
 
-    def peupler_liste(self):
-        self.ui.liste_indiv.clear()
-        filtre = self.ui.filtre.text().toLower()
+    def fillList(self):
+        self.ui.indiv_list.clear()
+        nameFilter = self.ui.filter.text().toLower()
         for xr in self.gedcom.indexXrefsI:
             ind = self.gedcom.getIndividualAtXref(xr)
-            if ind.get_name_for_classment()[:len(filtre)] == filtre or len(filtre)==0:
+            if ind.get_name_for_classment()[:len(nameFilter)] == nameFilter or len(nameFilter)==0:
                 item = QtGui.QListWidgetItem(ind.get_cased_name())
                 item.xref = xr
-                self.ui.liste_indiv.addItem(item)
-                if len(self.ui.liste_indiv) > self.nbLimit:
+                self.ui.indiv_list.addItem(item)
+                if len(self.ui.indiv_list) > self.nbLimit:
                     #TODO signaler limite atteinte
                     break
 
     def getXref(self):
-        """Renvoie l'xref de l'individu sélectionné"""
-        it = self.ui.liste_indiv.currentItem()
+        """Get selected person xref"""
+        it = self.ui.indiv_list.currentItem()
         if it:
             return it.xref
         else:
             return False
 
 
-class Fenetre_Options(QtGui.QDialog):
+class Option_dialog(QtGui.QDialog):
     def __init__(self):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Options()
         self.ui.setupUi(self)
-        QtCore.QObject.connect(self.ui.boutonCoulFemmes,QtCore.SIGNAL("clicked()"), lambda sex="F": self.selectColor(sex))
-        QtCore.QObject.connect(self.ui.boutonCoulHommes,QtCore.SIGNAL("clicked()"), lambda sex="H": self.selectColor(sex))
+        QtCore.QObject.connect(self.ui.womenColorButton,QtCore.SIGNAL("clicked()"), lambda sex="F": self.selectColor(sex))
+        QtCore.QObject.connect(self.ui.menColorButton,QtCore.SIGNAL("clicked()"), lambda sex="H": self.selectColor(sex))
 
         options = QtCore.QSettings("A3X", "pySequoia")
 
     def selectColor(self, dest):
-        """Ouvre le sélecteur de couleur"""
+        """Open color picker"""
         dlg = QtGui.QColorDialog(self)
         dlg.exec_()
         col = dlg.currentColor()
         if dest == 'F':
-            bouton = self.ui.boutonCoulFemmes
+            bouton = self.ui.womenColorButton
         else:
-            bouton = self.ui.boutonCoulHommes
+            bouton = self.ui.menColorButton
         pal = bouton.palette()
         pal.setColor(0, QtGui.QPalette.Button, col)
         bouton.setPalette(pal)
 
     def getColor(self, sex):
         if sex == 'F':
-            bouton = self.ui.boutonCoulFemmes
+            button = self.ui.womenColorButton
         else:
-            bouton = self.ui.boutonCoulHommes
-        col = bouton.palette().color(0, QtGui.QPalette.Button)
+            button = self.ui.menColorButton
+        col = button.palette().color(0, QtGui.QPalette.Button)
         return col.getRgbF()[:3]
 
     def getFontSize(self):
@@ -276,14 +275,14 @@ class Fenetre_Options(QtGui.QDialog):
 
     def setColor(self, sex, coul):
         if sex == 'F':
-            bouton = self.ui.boutonCoulFemmes
+            button = self.ui.womenColorButton
         else:
-            bouton = self.ui.boutonCoulHommes
-        pal = bouton.palette()
+            button = self.ui.menColorButton
+        pal = button.palette()
         col = QtGui.QColor()
         col.setRgbF(coul[0], coul[1], coul[2])
         pal.setColor(0, QtGui.QPalette.Button, col)
-        bouton.setPalette(pal)
+        button.setPalette(pal)
 
 
         

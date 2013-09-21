@@ -47,7 +47,7 @@
         <property name="title">
          <string>Type d'arbre</string>
         </property>
-        <widget class="QRadioButton" name="typeArbre_ascendant">
+        <widget class="QRadioButton" name="treeType_ascending">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -63,7 +63,7 @@
           <bool>true</bool>
          </property>
         </widget>
-        <widget class="QRadioButton" name="typeArbre_descendant">
+        <widget class="QRadioButton" name="treeType_descending">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -95,7 +95,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="orientation_paysage">
+          <widget class="QRadioButton" name="orientation_landscape">
            <property name="text">
             <string>Paysage</string>
            </property>
@@ -114,7 +114,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="encodage">
+         <widget class="QComboBox" name="encoding">
           <item>
            <property name="text">
             <string>UTF-8</string>
@@ -146,14 +146,14 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QCheckBox" name="inclure_images">
+         <widget class="QCheckBox" name="include_images">
           <property name="text">
            <string>Inclure les images</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="creer_index">
+         <widget class="QCheckBox" name="create_index">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -187,7 +187,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="nb_generations">
+         <widget class="QSpinBox" name="generation_nb">
           <property name="minimum">
            <number>1</number>
           </property>
@@ -304,7 +304,7 @@
      <string>Options</string>
     </property>
     <addaction name="actionPreferences"/>
-    <addaction name="actionA_propos_de_pySequoia"/>
+    <addaction name="action_about_pySequoia"/>
    </widget>
    <addaction name="menuOptions"/>
   </widget>
@@ -314,7 +314,7 @@
     <string>Préférences...</string>
    </property>
   </action>
-  <action name="actionA_propos_de_pySequoia">
+  <action name="action_about_pySequoia">
    <property name="text">
     <string>A propos de pySequoia...</string>
    </property>
