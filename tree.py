@@ -155,7 +155,7 @@ class Tree:
         """Initialise PDF"""
         self.pdf = AbstractLab(str(self.options.value("saveFile").toString()), self._get_pageSize())
         self.pdf.addPage()
-        self.pdf.title = str(tr(self.options.value("treeType").toString()) + ' ' + tr(QString('from')) + ' ' \
+        self.pdf.title = unicode(tr(self.options.value("treeType").toString()) + u' ' + tr(QString('from')) + ' ' \
             + self.base_indiv.get_cased_name())
         self.ytxpos = self._get_pageHeight()-20*mm
         # TODO custom title
