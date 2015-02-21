@@ -11,7 +11,7 @@ Author : Augustin Roche
 Spring 2012
 """
 
-import sys, os
+import sys, os, subprocess
 from PyQt4 import QtCore, QtGui
 from ui.pySequoia_form_princ import Ui_MainWindow
 from ui.select_indiv_dialog import Ui_select_indiv_dialog
@@ -28,8 +28,6 @@ class Application(QtGui.QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-        #self.xref_base_indiv = '3179'
 
         self.optionDialog = Option_dialog()
 
@@ -63,7 +61,7 @@ class Application(QtGui.QMainWindow):
             self.read_gedcom()
 
     def file_save_dialog(self):
-        """Dialogue d'enregistrement du PDF"""
+        """PDF File saving dialog"""
         options = QtCore.QSettings("A3X", "pySequoia")
         fd = QtGui.QFileDialog(self)
         fd.setNameFilter('PDF files (*.pdf)')
@@ -74,6 +72,7 @@ class Application(QtGui.QMainWindow):
         if len(fd.selectedFiles()) > 0:
             path = fd.selectedFiles()[0]
             self.ui.lineEdit_2.setText(path)
+	# TODO save directory into options
 
     def read_gedcom(self):
         """Reloads Gedcom file"""
@@ -145,7 +144,7 @@ class Application(QtGui.QMainWindow):
         
 
     def setOptions(self):
-        """Traite les options choisies"""
+        """Processes settings"""
         options = QtCore.QSettings("A3X", "pySequoia")
         options.setValue('saveFile', self.ui.lineEdit_2.text())
         options.setValue("gedcomFile", self.ui.lineEdit.text())
@@ -182,7 +181,8 @@ class Application(QtGui.QMainWindow):
         QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
         options = QtCore.QSettings("A3X", "pySequoia")
         self.setOptions()
-        if not os.path.isdir(os.path.dirname(str(options.value("saveFile").toString()))):
+        pdfPath = str(options.value("saveFile").toString())
+        if not os.path.isdir(os.path.dirname(pdfPath)):
             QtGui.QMessageBox.warning(self, _("Error"), _("Enter a PDF file name"))
             QtGui.QApplication.restoreOverrideCursor()
             return
@@ -197,12 +197,18 @@ class Application(QtGui.QMainWindow):
             myTree.index_alpha()
         myTree.endDoc()
         QtGui.QApplication.restoreOverrideCursor()
-        QtGui.QMessageBox.information(self, _("Done"), _("PDF file was successfully created"))
+        #QtGui.QMessageBox.information(self, _("Done"), _("PDF file was successfully created"))
+        
+        # open pdf file
+        if sys.platform.startswith('linux'):
+	    subprocess.call(["xdg-open", pdfPath])
+	else:
+	    os.startfile(pdfPath)
 
 
 class Select_indiv(QtGui.QDialog):
     """Dialog for selecting base person"""
-    nbLimit = 100
+    nbLimit = 200
     
     def __init__(self, gedcom):
         QtGui.QDialog.__init__(self)
@@ -295,3 +301,11 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+    
+# TODO
+# * enable title editing
+# * font selection
+# * image size option
+# * translation
+# * disable OK while all mandatory settings not defined
