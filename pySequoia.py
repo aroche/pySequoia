@@ -19,7 +19,6 @@ from ui.options import Ui_Options
 from gedcom import *
 import tree
 from gettext import gettext as _
-import pdb
 
 
 class Application(QtGui.QMainWindow):
@@ -88,11 +87,9 @@ class Application(QtGui.QMainWindow):
             except UnicodeDecodeError:
                 QtGui.QMessageBox.warning(self, _("Read error"), _("Check the file encoding"))
             except:
-                #pdb.post_mortem()
                 e = sys.exc_info()[1]
                 QtGui.QMessageBox.warning(self, _("Error"), _("File is not a valid Gedcom:\n" + str(e)))
             else:
-                #pdb.set_trace()
                 xr = self.gedcom.indexXrefsI.keys()[0]
                 ind = self.gedcom.getIndividualAtXref(xr)
                 self.ui.label_4.setText(ind.get_cased_name())
@@ -167,7 +164,7 @@ class Application(QtGui.QMainWindow):
         options.setValue("menColor", self.optionDialog.getColor('M'))
         options.setValue("womenColor", self.optionDialog.getColor('F'))
         options.setValue("fontSize", self.optionDialog.getFontSize())
-        # TODO : prévoir les dialogues pour ça
+        # TODO : make dialogs for these settings
         options.setValue("fontName", "Helvetica")
         options.setValue("imageSize", self.optionDialog.ui.image_size.value())
         # Elements à ajouter aux individus

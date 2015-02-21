@@ -34,13 +34,12 @@ class Tree:
 		if generation > self.max_generations:
 			self.lastpos = {}
 			return False
-		#pdb.set_trace()
 		refi = indiv.get_xref()
 		try:
 			pos = self.index_indiv[refi]
 		except KeyError:
 			pos = None
-		if pos: # l'indiv existe dejà
+		if pos: # indiv already exists
 			self.write_indiv(indiv, generation, str(generation)+'.', pos)
 			self.lastpos = {'page':self.pdf.curPage, 'ypos':self.ytxpos}
 			return False
@@ -100,7 +99,6 @@ class Tree:
 				ep = fs.get_father()
 			else:
 				ep = fs.get_mother()
-			#pdb.set_trace()
 			try:
 				pos2 = self.index_fam[fs.get_xref()]
 			except KeyError:
@@ -122,7 +120,7 @@ class Tree:
 			if newcouple:
 				self.index_fam[fs.get_xref()] = pos2
 			
-			if t > 0: # mariage supplémentaire
+			if t > 0: # other marriage
 				mariage1 = indiv.get_union(t)
 				if mariage1.getNumberOfChildren() > 0:
 					pos = self.index_fam[mariage1.get_xref()]
@@ -176,7 +174,6 @@ class Tree:
 		width = self._get_pageSize()[0]
 		fontSize = self.options.value("fontSize").toInt()[0]
 
-		#print "Ecriture de ", indiv.get_xref(), indiv.get_cased_name()
 		imgFile = ''
 		if indiv != None and self.options.value("printImages").toBool():
 			img = indiv.getTag("OBJE")
@@ -209,7 +206,7 @@ class Tree:
 			return
 
 		if link == None:
-			# infos complémentaires
+			# complementary information
 			txt.setColor((0,0,0))
 			if 'dates' in self.options.value("printElements").toPyObject():
 				evts = indiv.get_birth()
@@ -223,7 +220,7 @@ class Tree:
 			if 'profession' in self.options.value("printElements").toPyObject():
 				occu = indiv.get_occupation()
 				if occu:
-					# TODO: mettre en italique et réduire si nécessaire
+					# TODO: put in italic and reduce if needed
 					txt.addWord(occu)
 			# Notes
 			if 'notes' in self.options.value("printElements").toPyObject():
@@ -338,7 +335,7 @@ class Tree:
 		keyList.sort(key = lambda x: self.gedcom.getIndividualAtXref(x).get_name_for_classment())
 		self.new_page()
 		topP = self._get_pageHeight()
-		#TODO : Titre et lien vers l'index en debut de document
+		#TODO : Title and link to index at the beginning of the document
 
 		colWidth = (self._get_pageSize()[0]-14*mm) / NBCOL
 		ytxpos = topP - 25*mm
@@ -347,7 +344,6 @@ class Tree:
 			indiv = self.gedcom.getIndividualAtXref(xref)
 			x = (column - 1) * colWidth + 7*mm
 			txt = TextElement(x, ytxpos)
-			#pdb.set_trace()
 			page = self.index_indiv[xref]['page']
 			txt.addWord(indiv.get_cased_name())
 			txt.addWord('.' * 20)

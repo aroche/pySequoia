@@ -9,7 +9,7 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase.pdfmetrics import stringWidth #, registerFont
 #from reportlab.pdfbase.ttfonts import TTFont
 import os
-import pdb
+
 
 class TextElement:
     """A text element that can contain several "words" in several colors"""
@@ -148,7 +148,7 @@ class AbstractLab():
             for name in dests[page.numPage].keys():
                 self.canvas.bookmarkPage(name, fit='FitH', top=dests[page.numPage][name])
 
-            # n° de page
+            # page number
             self.canvas.setFillColor((0,0,0))
             self.canvas.drawRightString(self.pageSize[0]-8*mm, 5*mm, str(page.numPage))
             

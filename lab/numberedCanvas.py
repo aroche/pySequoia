@@ -6,7 +6,7 @@
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
-#import pdb
+
 
 class NumberedCanvas(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
